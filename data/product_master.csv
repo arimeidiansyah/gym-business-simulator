@@ -1,0 +1,20 @@
+product_id,product_name,category,price
+MEM001,Monthly Membership,Membership,500000
+MEM002,Quarterly Membership,Membership,1350000
+MEM003,Semi Annual Membership,Membership,2400000
+MEM004,Annual Membership,Membership,4500000
+PT001,PT 5 Sessions,Personal Training,850000
+PT002,PT 10 Sessions,Personal Training,1600000
+PT003,PT 20 Sessions,Personal Training,3000000
+MER001,Gym T-Shirt,Merchandise,180000
+MER002,Gym Bottle,Merchandise,120000
+MER003,Gym Towel,Merchandise,90000
+MER004,Gym Bag,Merchandise,350000
+MER005,Gym Cap,Merchandise,150000
+SUP001,Whey Protein,Supplement,650000
+SUP002,Creatine,Supplement,350000
+SUP003,BCAA,Supplement,450000
+SUP004,Pre Workout,Supplement,500000
+SUP005,Protein Bar,Supplement,35000
+LOC001,Monthly Locker,Locker Rental,100000
+LOC002,Annual Locker,Locker Rental,900000

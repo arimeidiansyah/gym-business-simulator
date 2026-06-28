@@ -1,0 +1,5 @@
+membership_id,membership_name,duration_days,price
+MEM001,Monthly,30,500000
+MEM002,Quarterly,90,1350000
+MEM003,Semi Annual,180,2400000
+MEM004,Annual,365,4500000

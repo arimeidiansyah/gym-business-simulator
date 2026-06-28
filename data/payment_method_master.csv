@@ -1,0 +1,7 @@
+payment_method_id,payment_method
+PM001,Cash
+PM002,QRIS
+PM003,Credit Card
+PM004,Debit Card
+PM005,Bank Transfer
+PM006,E-Wallet
