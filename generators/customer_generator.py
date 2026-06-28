@@ -5,22 +5,37 @@ from datetime import timedelta
 import numpy as np
 import pandas as pd
 from faker import Faker
+from utils.name_utils import clean_name
 
-import config
+from config.settings import (
+    TOTAL_CUSTOMERS,
+    START_DATE,
+    END_DATE,
+    RANDOM_SEED
+)
+
+from config.business_rules import (
+    GENDER_DISTRIBUTION,
+    CITY_DISTRIBUTION,
+    AGE_DISTRIBUTION
+)
+
+from config.persona_rules import (
+    PERSONA_PROFILE,
+    PERSONA_DISTRIBUTION
+)
+
+from config.payment_rules import PAYMENT_BEHAVIOUR
 
 fake = Faker("id_ID")
 
-# ---------------------------------------------------
-# Setting
-# ---------------------------------------------------
-
-random.seed(config.RANDOM_SEED)
-np.random.seed(config.RANDOM_SEED)
+random.seed(RANDOM_SEED)
+np.random.seed(RANDOM_SEED)
 
 
-# ---------------------------------------------------
+# =========================================================
 # Helper Functions
-# ---------------------------------------------------
+# =========================================================
 
 def generate_customer_id(number):
     return f"CUST{number:05d}"
@@ -29,93 +44,88 @@ def generate_customer_id(number):
 def random_birth_date():
 
     age_group = random.choices(
-        population=[
-            (18, 24),
-            (25, 34),
-            (35, 44),
-            (45, 55),
-            (56, 65)
-        ],
-        weights=[25, 45, 20, 8, 2],
+        population=list(AGE_DISTRIBUTION.keys()),
+        weights=list(AGE_DISTRIBUTION.values()),
         k=1
     )[0]
 
     age = random.randint(age_group[0], age_group[1])
 
-    today = config.END_DATE
-
-    birth = today - timedelta(days=age * 365 + random.randint(0, 364))
+    birth = END_DATE - timedelta(
+        days=age * 365 + random.randint(0, 364)
+    )
 
     return birth.date(), age
 
 
 def random_join_date():
 
-    total_days = (config.END_DATE - config.START_DATE).days
+    total_days = (END_DATE - START_DATE).days
 
     return (
-        config.START_DATE +
+        START_DATE +
         timedelta(days=random.randint(0, total_days))
     ).date()
 
-# ---------------------------------------------------
+
+def choose_persona():
+
+    return random.choices(
+        population=list(PERSONA_DISTRIBUTION.keys()),
+        weights=list(PERSONA_DISTRIBUTION.values()),
+        k=1
+    )[0]
+
+
+def choose_payment(persona):
+
+    payment_rule = PAYMENT_BEHAVIOUR[persona]
+
+    return random.choices(
+        population=list(payment_rule.keys()),
+        weights=list(payment_rule.values()),
+        k=1
+    )[0]
+
+
+# =========================================================
 # Main Generator
-# ---------------------------------------------------
+# =========================================================
 
 def generate_customers():
 
     project_root = Path(__file__).resolve().parent.parent
 
-    persona_df = pd.read_csv(
-        project_root / "data" / "persona_master.csv"
-    )
-
-    payment_df = pd.read_csv(
-        project_root / "data" / "payment_method_master.csv"
-    )
-
-    cities = [
-        "Bekasi",
-        "Jakarta",
-        "Depok",
-        "Bogor",
-        "Tangerang"
-    ]
-
-    city_weights = [45, 25, 10, 10, 10]
-
     rows = []
 
-    for i in range(1, config.TOTAL_CUSTOMERS + 1):
+    for i in range(1, TOTAL_CUSTOMERS + 1):
 
         gender = random.choices(
-            ["Male", "Female"],
-            weights=[60, 40],
+            population=list(GENDER_DISTRIBUTION.keys()),
+            weights=list(GENDER_DISTRIBUTION.values()),
             k=1
         )[0]
 
         if gender == "Male":
-            name = fake.name_male()
+            name = clean_name(fake.name_male())
         else:
-            name = fake.name_female()
+            name = clean_name(fake.name_female())
 
         birth_date, age = random_birth_date()
 
-        persona = random.choices(
-            persona_df["persona_name"],
-            weights=persona_df["percentage"],
-            k=1
-        )[0]
-
-        payment = random.choice(
-            payment_df["payment_method"]
-        )
-
         city = random.choices(
-            cities,
-            weights=city_weights,
+            population=list(CITY_DISTRIBUTION.keys()),
+            weights=list(CITY_DISTRIBUTION.values()),
             k=1
         )[0]
+
+        persona = choose_persona()
+
+        payment = choose_payment(persona)
+
+        membership_preference = random.choice(
+            PERSONA_PROFILE[persona]["membership_preference"]
+        )
 
         status = random.choices(
             ["Active", "Inactive"],
@@ -143,14 +153,20 @@ def generate_customers():
 
             "preferred_payment": payment,
 
+            "membership_preference": membership_preference,
+
             "status": status
 
         })
 
     df = pd.DataFrame(rows)
 
-    output = project_root / "output" / "dim_customer.xlsx"
+    output = project_root / "output" / "dim_customer.csv"
 
-    df.to_excel(output, index=False)
+    df.to_csv(output, index=False)
 
     print(f"✅ Customer Dimension : {len(df)} rows")
+
+
+if __name__ == "__main__":
+    generate_customers()
