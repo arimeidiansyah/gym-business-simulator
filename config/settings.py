@@ -1,7 +1,7 @@
 """
 Project Settings
 """
-
+from pathlib import Path
 from datetime import datetime
 
 # =====================================================
@@ -9,6 +9,10 @@ from datetime import datetime
 # =====================================================
 
 PROJECT_NAME = "Gym Business Simulator"
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+OUTPUT_FOLDER = BASE_DIR / "output"
+
 
 # =====================================================
 # DATASET SETTINGS

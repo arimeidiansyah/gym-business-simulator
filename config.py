@@ -4,12 +4,14 @@ Gym Business Data Generator
 
 All business parameters should be configured here.
 """
-
+from pathlib import Path
 from datetime import datetime
 
 # ==========================================================
 # GENERAL
 # ==========================================================
+BASE_DIR = Path(__file__).resolve().parent.parent
+OUTPUT_FOLDER = BASE_DIR / "output"
 
 RANDOM_SEED = 42
 
