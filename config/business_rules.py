@@ -30,8 +30,8 @@ MEMBERSHIP_DISTRIBUTION = {
 # =====================================================
 
 GENDER_DISTRIBUTION = {
-    "Male": 60,
-    "Female": 40
+    "Male": 61.33,
+    "Female": 38.67
 }
 
 CITY_DISTRIBUTION = {

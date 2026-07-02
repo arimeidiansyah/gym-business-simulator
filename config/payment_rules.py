@@ -6,15 +6,13 @@ PAYMENT_BEHAVIOUR = {
 
     "Casual": {
 
-        "QRIS": 45,
-        "E-Wallet": 35,
+        "QRIS": 80,
         "Cash": 20
     },
 
     "Fitness Enthusiast": {
 
-        "QRIS": 25,
-        "E-Wallet": 30,
+        "QRIS": 55,
         "Credit Card": 25,
         "Bank Transfer": 20
     },
@@ -35,8 +33,7 @@ PAYMENT_BEHAVIOUR = {
     "Dormant": {
 
         "Cash": 40,
-        "QRIS": 30,
-        "E-Wallet": 30
+        "QRIS": 60
     }
 
 }
