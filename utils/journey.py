@@ -4,8 +4,6 @@ from datetime import timedelta
 from utils.event import create_event
 from config.customer_behaviour import CUSTOMER_BEHAVIOUR
 
-from utils.event import create_event
-
 from pandas.tseries.offsets import DateOffset
 
 
@@ -23,16 +21,16 @@ def get_membership_duration(customer):
 
 
 
-def generate_monthly_visits(customer, month_start):
+def generate_monthly_visits(customer, month_start, product_df):
 
     behaviour = CUSTOMER_BEHAVIOUR[customer["persona"]]
 
-    min_visit, max_visit = behaviour["visit_per_month"]
+    min_visits, max_visits = behaviour["visit_per_month"]
 
-    total_visit = random.randint(min_visit, max_visit)
+    total_visits = random.randint(min_visits, max_visits)
 
     visit_days = sorted(
-        random.sample(range(1, 29), total_visit)
+        random.sample(range(1, 29), total_visits)
     )
 
     events = []
@@ -54,7 +52,7 @@ def generate_monthly_visits(customer, month_start):
 
     return events
 
-def simulate_membership_period(customer):
+def simulate_membership_period(customer, product_df):
 
     membership_months = get_membership_duration(customer)
 
@@ -66,7 +64,7 @@ def simulate_membership_period(customer):
 
         monthly_events = generate_monthly_visits(
             customer,
-            current_month
+            current_month, product_df
         )
 
         events.extend(monthly_events)
@@ -75,7 +73,7 @@ def simulate_membership_period(customer):
 
     return events
 
-def simulate_customer(customer):
+def simulate_customer(customer, product_df):
 
     events = []
 
@@ -91,7 +89,7 @@ def simulate_customer(customer):
         )
     )
 
-    period_events = simulate_membership_period(customer)
+    period_events = simulate_membership_period(customer, product_df)
 
     events.extend(period_events)
 

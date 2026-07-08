@@ -1,7 +1,7 @@
 from dimensions.dim_membership import generate_membership_dimension
 from dimensions.dim_product import generate_product_dimension
 from generators.customer_generator import generate_customers
-from generators.transaction_generator import generate_customer_events
+from generators.event_generator import generate_events
 
 
 def main():
@@ -16,7 +16,7 @@ def main():
 
     generate_customers()
 
-    generate_customer_events()
+    generate_events()
 
     print("\nFinished Successfully")
 

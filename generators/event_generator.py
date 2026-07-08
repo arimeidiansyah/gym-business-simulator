@@ -12,7 +12,7 @@ print(OUTPUT_FOLDER)
 random.seed(RANDOM_SEED)
 
 
-def generate_customer_events():
+def generate_events():
 
     # ==========================
     # Load Dimension Tables
@@ -20,13 +20,15 @@ def generate_customer_events():
 
     customer_df = pd.read_csv(f"{OUTPUT_FOLDER}/dim_customer.csv")
 
+    product_df = pd.read_csv(f"{OUTPUT_FOLDER}/dim_product.csv")
+
     customer_df["join_date"] = pd.to_datetime(customer_df["join_date"])
 
     all_events = []
 
     for _, customer in customer_df.iterrows():
 
-        customer_events = simulate_customer(customer)
+        customer_events = simulate_customer(customer, product_df)
 
         all_events.extend(customer_events)
     
@@ -39,7 +41,13 @@ def generate_customer_events():
         if e["customer_id"] == first_customer
     ]
 
-    for event in customer_events[:20]:
-        print(event)
+    event_df = pd.DataFrame(all_events)
 
-    return
+    event_df.to_csv(
+    f"{OUTPUT_FOLDER}/event_log.csv",
+    index=False
+    )
+
+    print(f"✅ Event Log : {len(event_df)} events")
+
+    return event_df

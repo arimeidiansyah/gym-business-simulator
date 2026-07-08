@@ -4,6 +4,9 @@ def create_event(
     event_type,
     product_id=None,
     payment_method=None,
+    check_in=None,
+    check_out=None,
+    duration_minutes=None,
     notes=None
 ):
 
@@ -14,5 +17,8 @@ def create_event(
         "event_type": event_type,
         "product_id": product_id,
         "payment_method": payment_method,
+        "check_in": check_in,
+        "check_out": check_out,
+        "duration_minutes": duration_minutes,
         "notes": notes
     }
