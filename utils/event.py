@@ -19,6 +19,6 @@ def create_event(
         "payment_method": payment_method,
         "check_in": check_in,
         "check_out": check_out,
-        "duration_minutes": duration_minutes,
+        "duration_minutes":duration_minutes,
         "notes": notes
     }

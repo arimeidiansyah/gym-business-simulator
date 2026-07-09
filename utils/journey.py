@@ -1,5 +1,5 @@
 import random
-from datetime import timedelta
+from datetime import datetime,timedelta
 
 from utils.event import create_event
 from config.customer_behaviour import CUSTOMER_BEHAVIOUR
@@ -19,7 +19,42 @@ def get_membership_duration(customer):
     return duration_map[membership]
 
 
+def generate_visit_timestamp(visit_date):
 
+    period = random.choices(
+        ["morning","afternoon","evening"],
+        weights=[20, 30, 50],
+        k=1
+    )[0]
+
+    if period =="morning":
+        hour = random.randint(5,9)
+
+    elif period =="afternoon":
+        hour = random.randint(10,16)
+    
+    else:
+        hour = random.randint(17,22)
+
+    minute = random.randint(0,59)
+
+    duration = random.randint(40, 120)
+
+    check_in = datetime.combine(
+        visit_date.date(),
+        datetime.min.time()
+        ).replace(
+            hour=hour,
+            minute=minute
+        )
+    
+    check_out = check_in + timedelta(minutes=duration)
+
+    return(
+        check_in,
+        check_out,
+        duration
+    )
 
 def generate_monthly_visits(customer, month_start, product_df):
 
@@ -42,11 +77,16 @@ def generate_monthly_visits(customer, month_start, product_df):
         if visit_date < customer["join_date"]:
             continue
 
+        check_in, check_out, duration = generate_visit_timestamp(visit_date)
+
         events.append(
             create_event(
                 event_date=visit_date,
                 customer_id=customer["customer_id"],
-                event_type="Visit"
+                event_type="Visit",
+                check_in=check_in,
+                check_out=check_out,
+                duration_minutes=duration
             )
         )
 
