@@ -1,3 +1,3 @@
-from generators.transaction_generator import generate_transactions
+from generators.event_generator import generate_transactions
 
 generate_transactions()

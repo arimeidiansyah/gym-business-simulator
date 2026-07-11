@@ -56,6 +56,32 @@ def generate_visit_timestamp(visit_date):
         duration
     )
 
+
+def generate_supplement_purchase(
+        customer,
+        visit_date,
+        product_df
+):
+    if random.random() >0.12:
+        return []
+    
+    supplement_df = product_df[
+        product_df["category"]== "Supplement"
+    ]
+
+    selected_product = supplement_df.sample(1).iloc[0]
+
+    event = create_event(
+        event_date = visit_date,
+        customer_id = customer["customer_id"],
+        event_type = "supplement",
+        product_id = selected_product["product_id"],
+        payment_method = customer["preferred_payment"]
+    )
+
+    return [event]
+
+
 def generate_monthly_visits(customer, month_start, product_df):
 
     behaviour = CUSTOMER_BEHAVIOUR[customer["persona"]]
@@ -90,7 +116,18 @@ def generate_monthly_visits(customer, month_start, product_df):
             )
         )
 
+        supplement_events = generate_supplement_purchase(
+            customer,
+            visit_date,
+            product_df
+        )
+        events.extend(supplement_events)
+
     return events
+
+
+
+    
 
 def simulate_membership_period(customer, product_df):
 
