@@ -57,24 +57,27 @@ def generate_visit_timestamp(visit_date):
     )
 
 
-def generate_supplement_purchase(
+def generate_purchase_event(
         customer,
         visit_date,
-        product_df
+        product_df,
+        category,
+        probability,
+        event_type
 ):
-    if random.random() >0.12:
+    if random.random() > probability:
         return []
     
-    supplement_df = product_df[
-        product_df["category"]== "Supplement"
+    category_df = product_df[
+        product_df["category"] == category
     ]
 
-    selected_product = supplement_df.sample(1).iloc[0]
+    selected_product = category_df.sample(1).iloc[0]
 
     event = create_event(
         event_date = visit_date,
         customer_id = customer["customer_id"],
-        event_type = "supplement",
+        event_type = event_type,
         product_id = selected_product["product_id"],
         payment_method = customer["preferred_payment"]
     )
@@ -116,10 +119,13 @@ def generate_monthly_visits(customer, month_start, product_df):
             )
         )
 
-        supplement_events = generate_supplement_purchase(
-            customer,
-            visit_date,
-            product_df
+        supplement_events = generate_purchase_event(
+            customer=customer,
+            visit_date=visit_date,
+            product_df=product_df,
+            category="Supplement",
+            probability=0.12,
+            event_type="Supplement"
         )
         events.extend(supplement_events)
 
