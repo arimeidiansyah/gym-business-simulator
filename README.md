@@ -4,10 +4,11 @@
 
 Gym Business Simulator is a Python project that simulates the daily operations of a gym and generates business datasets for analytics purposes.
 
-The initial idea was to generate a gym dataset directly using AI. While it produced data quickly, the result was too random and did not reflect how a gym business actually operates. This project was created to simulate the business process first, allowing the generated data to follow more realistic customer behavior.
+The project started as an attempt to generate a gym business dataset automatically. While the data could be generated quickly, the result was too random and did not reflect how a gym business actually operates.
 
-The project is being developed as part of my Data Analytics portfolio.
+Instead of generating transactions directly, the simulator models the customer journey first. Customers join as members, visit the gym based on their behavior, and generate business events such as supplement purchases, merchandise purchases, and personal training sessions.
 
+The generated dataset is intended for exploratory data analysis, SQL practice, Power BI dashboards, and analytics portfolio projects.
 ---
 
 ## Current Progress
