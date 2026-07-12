@@ -99,6 +99,8 @@ def generate_monthly_visits(customer, month_start, product_df):
 
     events = []
 
+    pt_purchased = False
+
     for day in visit_days:
 
         visit_date = month_start.replace(day=1) + timedelta(days=day - 1)
@@ -129,11 +131,34 @@ def generate_monthly_visits(customer, month_start, product_df):
         )
         events.extend(supplement_events)
 
+        merchandise_events = generate_purchase_event(
+            customer=customer,
+            visit_date=visit_date,
+            product_df=product_df,
+            category="Merchandise",
+            probability=0.06,
+            event_type="Merchandise"
+        )
+
+        events.extend(merchandise_events)
+
+        if not pt_purchased:
+            personal_training_events = generate_purchase_event(
+                customer=customer,
+                visit_date=visit_date,
+                product_df=product_df,
+                category="Personal Training",
+                probability=0.02,
+                event_type="Personal Training"
+            )
+
+            events.extend(personal_training_events)
+
+            if len(personal_training_events) > 0:
+                pt_purchased = True
+
     return events
 
-
-
-    
 
 def simulate_membership_period(customer, product_df):
 
