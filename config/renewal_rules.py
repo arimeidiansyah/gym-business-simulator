@@ -2,7 +2,7 @@
 Membership Renewal Probability
 """
 
-RENEWAL_RATE = {
+RENEWAL_PROBABILITY = {
 
     "Casual": 0.40,
 
@@ -15,3 +15,6 @@ RENEWAL_RATE = {
     "Dormant": 0.10
 
 }
+
+# Renewal delay (days after membership expires)
+RENEWAL_DELAY = (1, 14)

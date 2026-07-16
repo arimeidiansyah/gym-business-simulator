@@ -42,7 +42,7 @@ def generate_events():
     ]
 
     event_df = pd.DataFrame(all_events)
-
+    
     event_df.to_csv(
     f"{OUTPUT_FOLDER}/event_log.csv",
     index=False

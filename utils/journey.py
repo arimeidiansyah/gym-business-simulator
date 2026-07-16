@@ -1,8 +1,10 @@
 import random
 from datetime import datetime,timedelta
 
+from config.renewal_rules import (RENEWAL_PROBABILITY, RENEWAL_DELAY)
 from utils.event import create_event
 from config.customer_behaviour import CUSTOMER_BEHAVIOUR
+from config.settings import END_DATE
 
 from pandas.tseries.offsets import DateOffset
 
@@ -177,17 +179,34 @@ def simulate_membership_period(customer, product_df):
 
         events.extend(monthly_events)
 
-        current_month = current_month + DateOffset(months=1)
+        current_month += DateOffset(months=1)
 
-    return events
+        membership_end = current_month
+
+    return events, membership_end
+
+def should_renew(customer):
+    probability = RENEWAL_PROBABILITY[customer["persona"]
+    ]
+
+    return random.random() < probability
+
+def get_renewal_date(membership_end):
+    renewal_delay = random.randint(*RENEWAL_DELAY)
+    return membership_end + timedelta(days=renewal_delay)
 
 def simulate_customer(customer, product_df):
 
     events = []
+    membership_start = customer["join_date"]
 
-    membership_name = customer["membership_preference"] + " Membership"
+    while membership_start < END_DATE :
 
-    events.append(
+        customer["join_date"] = membership_start 
+
+        membership_name = customer["membership_preference"] + " Membership"
+
+        events.append(
         create_event(
             event_date=customer["join_date"],
             customer_id=customer["customer_id"],
@@ -196,11 +215,32 @@ def simulate_customer(customer, product_df):
             payment_method=customer["preferred_payment"]
         )
     )
+        
+        period_events, membership_end = simulate_membership_period(customer, product_df)
 
-    period_events = simulate_membership_period(customer, product_df)
+        events.extend(period_events)
 
-    events.extend(period_events)
+        # print(
+        #     customer["customer_id"],
+        #     membership_start.date(),
+        #     membership_end.date()
+        # )
+
+        if not should_renew(customer):
+            break
+
+        membership_start = get_renewal_date(membership_end)
+
+        # print(
+        #     "Renew ->",
+        #     membership_start.date()
+        # )
 
     events.sort(key=lambda x: x["event_date"])
 
     return events
+
+    
+
+
+

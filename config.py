@@ -18,6 +18,18 @@ RANDOM_SEED = 42
 START_DATE = datetime(2024, 7, 1)
 END_DATE = datetime(2026, 6, 30)
 
+CUSTOMER_JOIN_END = "2025-12-31"
+
+RENEWAL_DELAY = (0,14)
+
+RENEWAL_PROBABILITY = {
+    "premium":0.90,
+    "fitness enthusiast":0.85,
+    "corporate":0.70,
+    "casual":0.45,
+    "dormant":0.15
+}
+
 TOTAL_CUSTOMERS = 3000
 TARGET_TRANSACTIONS = 30000
 
@@ -122,4 +134,17 @@ MERCHANDISE = {
 LOCKER = {
     "Monthly Locker": 100000,
     "Annual Locker": 900000
+}
+
+# ==========================================================
+# Renewal Probability
+# ==========================================================
+
+
+RENEWAL_PROBABILITY = {
+    "Premium": 0.90,
+    "Fitness Enthusiast": 0.85,
+    "Corporate": 0.70,
+    "Casual": 0.45,
+    "Dormant": 0.15
 }

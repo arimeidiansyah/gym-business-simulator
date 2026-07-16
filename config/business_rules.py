@@ -8,10 +8,9 @@ Business Rules
 
 REVENUE_MIX = {
     "Membership": 0.80,
-    "PT": 0.11,
-    "Merchandise": 0.05,
-    "Supplement": 0.05,
-    "Locker": 0.02
+    "PT": 0.12,
+    "Merchandise": 0.04,
+    "Supplement": 0.04,
 }
 
 # =====================================================
