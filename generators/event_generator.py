@@ -44,8 +44,8 @@ def generate_events():
     event_df = pd.DataFrame(all_events)
     
     event_df.to_csv(
-    f"{OUTPUT_FOLDER}/event_log.csv",
-    index=False
+        OUTPUT_FOLDER/"fact_event_log.csv",
+        index=False
     )
 
     print(f"✅ Event Log : {len(event_df)} events")

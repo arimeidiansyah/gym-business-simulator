@@ -25,9 +25,3 @@ END_DATE = datetime(2025, 12, 31)
 
 # Random seed agar hasil generator konsisten
 RANDOM_SEED = 42
-
-# =====================================================
-# OUTPUT
-# =====================================================
-
-OUTPUT_FOLDER = "output"
