@@ -127,6 +127,15 @@ def generate_customers():
             PERSONA_PROFILE[persona]["membership_preference"]
         )
 
+        membership_product_map = {
+            "Monthly" : "MEM001",
+            "Quarterly":"MEM002",
+            "Semi Annual":"MEM003",
+            "Annual":"MEM004"
+        }
+
+        membership_product_id = membership_product_map[membership_preference]
+
         status = random.choices(
             ["Active", "Inactive"],
             weights=[90, 10],
@@ -154,6 +163,8 @@ def generate_customers():
             "preferred_payment": payment,
 
             "membership_preference": membership_preference,
+
+            "membership_product_id": membership_product_id,
 
             "status": status
 

@@ -204,14 +204,12 @@ def simulate_customer(customer, product_df):
 
         customer["join_date"] = membership_start 
 
-        membership_name = customer["membership_preference"] + " Membership"
-
         events.append(
         create_event(
             event_date=customer["join_date"],
             customer_id=customer["customer_id"],
             event_type="Membership",
-            product_id=membership_name,
+            product_id=customer["membership_product_id"],
             payment_method=customer["preferred_payment"]
         )
     )
@@ -220,21 +218,11 @@ def simulate_customer(customer, product_df):
 
         events.extend(period_events)
 
-        # print(
-        #     customer["customer_id"],
-        #     membership_start.date(),
-        #     membership_end.date()
-        # )
-
         if not should_renew(customer):
             break
 
         membership_start = get_renewal_date(membership_end)
 
-        # print(
-        #     "Renew ->",
-        #     membership_start.date()
-        # )
 
     events.sort(key=lambda x: x["event_date"])
 

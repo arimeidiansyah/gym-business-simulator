@@ -3,8 +3,7 @@ from dimensions.dim_product import generate_product_dimension
 from generators.customer_generator import generate_customers
 from generators.event_generator import generate_events
 from generators.visit_generator import generate_fact_visit
-
-
+from generators.transaction_generator import generate_fact_transaction
 
 
 
@@ -23,6 +22,8 @@ def main():
     generate_events()
 
     generate_fact_visit()
+
+    generate_fact_transaction()
 
     print("\nFinished Successfully")
 

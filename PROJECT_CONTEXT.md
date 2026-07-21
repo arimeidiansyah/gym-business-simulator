@@ -458,7 +458,14 @@ Do not implement before Version 1 is complete.
 - Behaviour-based customer segmentation
 - Revenue forecasting
 
+Future Pricing Enhancements
+- Historical product pricing (dim_product_price)
+- Promotional pricing
+- Membership discount campaigns
+- Dynamic pricing by season
+
 These ideas remain valuable but should never interrupt Version 1 development.
+
 
 ---
 
