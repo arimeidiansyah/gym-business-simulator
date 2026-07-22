@@ -4,7 +4,7 @@ from datetime import datetime,timedelta
 from config.renewal_rules import (RENEWAL_PROBABILITY, RENEWAL_DELAY)
 from utils.event import create_event
 from config.customer_behaviour import CUSTOMER_BEHAVIOUR
-from config.settings import END_DATE
+from config.settings import END_DATE, ACTIVITY_SIMULATION_MONTHS
 
 from pandas.tseries.offsets import DateOffset
 
@@ -128,7 +128,7 @@ def generate_monthly_visits(customer, month_start, product_df):
             visit_date=visit_date,
             product_df=product_df,
             category="Supplement",
-            probability=0.12,
+            probability=0.0075,
             event_type="Supplement"
         )
         events.extend(supplement_events)
@@ -138,7 +138,7 @@ def generate_monthly_visits(customer, month_start, product_df):
             visit_date=visit_date,
             product_df=product_df,
             category="Merchandise",
-            probability=0.06,
+            probability=0.015,
             event_type="Merchandise"
         )
 
@@ -150,7 +150,7 @@ def generate_monthly_visits(customer, month_start, product_df):
                 visit_date=visit_date,
                 product_df=product_df,
                 category="Personal Training",
-                probability=0.02,
+                probability=0.0075,
                 event_type="Personal Training"
             )
 
@@ -164,7 +164,9 @@ def generate_monthly_visits(customer, month_start, product_df):
 
 def simulate_membership_period(customer, product_df):
 
-    membership_months = get_membership_duration(customer)
+    membership_months =min(get_membership_duration(customer),ACTIVITY_SIMULATION_MONTHS
+    )
+
 
     current_month = customer["join_date"]
 
@@ -200,7 +202,7 @@ def simulate_customer(customer, product_df):
     events = []
     membership_start = customer["join_date"]
 
-    while membership_start < END_DATE :
+    while membership_start < END_DATE:
 
         customer["join_date"] = membership_start 
 
@@ -227,8 +229,4 @@ def simulate_customer(customer, product_df):
     events.sort(key=lambda x: x["event_date"])
 
     return events
-
-    
-
-
 

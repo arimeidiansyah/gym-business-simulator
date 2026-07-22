@@ -21,7 +21,9 @@ OUTPUT_FOLDER = BASE_DIR / "output"
 TOTAL_CUSTOMERS = 3000
 
 START_DATE = datetime(2024, 1, 1)
-END_DATE = datetime(2025, 12, 31)
+END_DATE = datetime(2026, 12, 31)
+ACTIVITY_SIMULATION_MONTHS = 3
+
 
 # Random seed agar hasil generator konsisten
 RANDOM_SEED = 42
