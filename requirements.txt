@@ -1,5 +1,4 @@
 pandas
 numpy
 faker
-openpyxl
 python-dateutil

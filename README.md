@@ -1,106 +1,158 @@
-# Gym Business Simulator
+#  Event-Driven Gym Business Simulator
 
-## Overview
-
-Gym Business Simulator is a Python project that simulates the daily operations of a gym and generates business datasets for analytics purposes.
-
-The project started as an attempt to generate a gym business dataset automatically. While the data could be generated quickly, the result was too random and did not reflect how a gym business actually operates.
-
-Instead of generating transactions directly, the simulator models the customer journey first. Customers join as members, visit the gym based on their behavior, and generate business events such as supplement purchases, merchandise purchases, and personal training sessions.
-
-The generated dataset is intended for exploratory data analysis, SQL practice, Power BI dashboards, and analytics portfolio projects.
----
-
-## Current Progress
-
-Completed
-
-* Customer Generator
-* Membership Dimension
-* Product Dimension
-* Event Log Generator
-* Visit Simulation
-* Visit Timestamp
-* Supplement Purchase Event
-* Merchandise Purchase Event
-* Personal Training Purchase Event
-
-Currently in Progress
-
-* Membership Renewal
-* Fact Visit
-* Fact Transaction
-
-Planned
-
-* SQL Analysis
-* Power BI Dashboard
-* Project Documentation
+A Python-based synthetic data generator that simulates the operations of a commercial fitness center using configurable business rules and customer behavior models.
 
 ---
 
-## Business Flow
+# Why This Project?
 
-The simulator currently follows this business process:
+Many data analytics portfolios rely on public datasets that are already clean, static, and lack realistic business processes.
+
+This project was created to solve that problem by generating synthetic business data that mimics how a real gym operates.
+
+Instead of randomly generating rows, the simulator models customer journeys, memberships, visits, purchases, renewals, and churn using configurable business rules.
+
+The generated datasets can then be used for SQL analysis, Power BI dashboards, business analysis, and data visualization projects.
+
+---
+
+# Project Objectives
+
+This project aims to:
+
+- Build realistic synthetic business datasets.
+- Simulate customer behavior using event-driven logic.
+- Practice dimensional data modeling.
+- Produce analytics-ready fact and dimension tables.
+- Demonstrate Business Analyst and Data Analyst skills.
+
+---
+
+# How It Works
+
+Every customer follows a business journey.
 
 ```text
-Customer
-    ↓
-Membership
-    ↓
-Gym Visit
-    ↓
-Purchase Event
-    ↓
-Event Log
+New Customer
+      │
+      ▼
+Purchase Membership
+      │
+      ▼
+Visit Gym
+      │
+      ├───────────────┐
+      ▼               ▼
+Buy Product      Personal Training
+      │
+      ▼
+Membership Expired
+      │
+      ▼
+Renew or Churn
 ```
 
-Instead of generating transactions randomly, every purchase is generated from an actual customer visit.
+Instead of creating random transactions, every record is generated from this customer lifecycle.
 
 ---
 
-## Current Business Rules
+# Technologies
 
-Some of the business rules implemented in the current version include:
-
-* Customers are assigned different personas.
-* Each persona has different visit frequency.
-* Visit events include check-in and check-out timestamps.
-* Supplement and merchandise purchases may occur during a visit.
-* Personal Training can only be purchased once within a membership period.
-* Payment methods follow each customer's preference.
-
-These rules will continue to evolve as the simulator becomes more realistic.
+- Python
+- Pandas
+- NumPy
+- Faker
+- Git
+- Power BI (for analysis)
+- VS Code
 
 ---
 
-## Project Structure
+# Project Structure
 
-```text
-gym-business-simulator/
-
+```
+gym-business-simulator
+│
 ├── config/
+├── data/
 ├── dimensions/
 ├── generators/
 ├── output/
 ├── utils/
+│
 ├── main.py
-└── README.md
+├── README.md
+└── requirements.txt
 ```
 
 ---
 
-## Technology
+# Generated Dataset
 
-* Python
-* Pandas
-* Git
-* GitHub
+## Dimension Tables
+
+- dim_customer
+- dim_membership
+- dim_product
+
+## Fact Tables
+
+- fact_event_log
+- fact_visit
+- fact_transaction
+
+These tables follow a dimensional modeling approach and are ready to be used for analytical reporting.
 
 ---
 
-## Version
+# Business Rules
 
-Current Version: **v1 (Work in Progress)**
+The simulator currently supports:
 
-This repository is actively being developed. New features and business rules will be added as the project evolves.
+- Customer personas
+- Membership preferences
+- Visit frequency
+- Membership renewal probability
+- Product purchase probability
+- Payment behavior
+- Customer churn
+
+All business rules are configurable through the `config` module.
+
+---
+
+# Example Use Cases
+
+The generated datasets can be used for:
+
+- Power BI Dashboard
+- SQL Portfolio
+- Customer Segmentation
+- Revenue Analysis
+- Membership Analysis
+- Cohort Analysis
+- Visit Pattern Analysis
+- Business Performance Reporting
+
+---
+
+# Future Improvements
+
+Version 2 is planned to include:
+
+- Dynamic customer acquisition
+- State-based customer journey
+- Marketing campaign simulation
+- Employee dimension
+- Operational cost simulation
+- Profit & Loss simulation
+- Multi-branch support
+- Seasonal customer behavior
+
+---
+
+# Author
+
+**Ari Meidiansyah**
+
+Business Analyst & Data Analyst Portfolio Project
